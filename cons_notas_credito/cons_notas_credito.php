@@ -22,7 +22,8 @@ include_once('funciones_ui.php');
 				'h_codigo': $('#h_codigo').val(),
 				'i_ingr_fecha': $('#i_ingr_fecha').val(),
 				'i_numero_factura': $('#i_numero_factura').val(),
-				'proy_id': $('#i_proy_id').val()
+				'proy_id': $('#i_proy_id').val(),
+				'i_orco_id': $("#i_orco_id").val()
 			},
 			function() {
 				$('#modal').hide('slow');
@@ -65,7 +66,7 @@ include_once('funciones_ui.php');
 		$('#div_modificar').show();
 		$.get('cons_notas_credito/codigo_temporal_notas_credito_modificar.php?id=' + id,
 			function(data) {
-				$('#h_codigo').val(data);
+				$('#h_codigo').val(id);
 				//ahora muestro los items para esa factura
 				mostrar_items();
 				$.get('cons_notas_credito/cons_notas_credito_datos.php?id=' + id, function(data) {
@@ -77,6 +78,7 @@ include_once('funciones_ui.php');
 					$('#i_numero_factura').val(r_array[3]);
 					$('#proveedor').val(r_array[4]);
 					$('#i_proy_id').val(r_array[5]);
+					$('#i_orco_id').val(r_array[6]);
 
 					$('#modal').show();
 					$('#overlay').show();
@@ -146,7 +148,8 @@ include_once('funciones_ui.php');
 				'r_detalle': $('#r_detalle').val(),
 				'h_codigo': $('#h_codigo').val(),
 				'i_cantidad': $('#i_cantidad').val(),
-				'ingr_id': $('#h_id').val()
+				'ingr_id': $('#h_id').val(),
+				'i_itbms': $("#i_itbms").val()
 			},
 			function(data) {
 				$('#h_coru_id').val('');
@@ -217,7 +220,7 @@ include_once('funciones_ui.php');
 				$('#m_inde_temp_code').val(r_array[5]);
 				$('#m_inde_detalle').val(r_array[6]);
 				$('#m_disponible').val(r_array[7]);
-				$('#m_orcd_con_itbms').val(r_array[8]);
+				$('#m_itbms').val(r_array[8]);
 
 			});
 	}
@@ -225,7 +228,7 @@ include_once('funciones_ui.php');
 	function borrar_item(id) {
 		var agree = confirm('¿Está seguro?');
 		if (agree) {
-			$('#result').load('cotizaciones_detalle_borrar.php?id=' + id,
+			$('#result').load('cons_notas_credito/cons_borrar_item_nota_credito.php?id=' + id,
 				function() {
 					mostrar_items();
 				}
@@ -241,7 +244,7 @@ include_once('funciones_ui.php');
 				'm_inde_cantidad': $('#m_inde_cantidad').val(),
 				'm_inti_id': $('#m_inti_id').val(),
 				'm_ingr_precio': $('#m_ingr_precio').val(),
-				'm_orcd_con_itbms': $('#m_orcd_con_itbms').val()
+				'm_itbms': $('#m_itbms').val()
 
 			},
 			function() {
@@ -298,7 +301,7 @@ include_once('funciones_ui.php');
 			<td class='tabla_datos'>
 				<div id='b_mostrar'><a href='javascript:mostrar()' class=botones>Mostrar</a></div>
 			</td>
-			<td><a href='javascript:nuevo()' class=botones>Nuevo</a><input type=text id=h_codigo></td>
+			<td><a href='javascript:nuevo()' class=botones>Nuevo</a><input type=hidden id=h_codigo></td>
 		</tr>
 	</table>
 </div>
@@ -317,7 +320,7 @@ include_once('funciones_ui.php');
 						<tr>
 							<?php echo entrada('input', 'Proveedor', 'proveedor', '200'); ?>
 							<?php echo entrada('fecha', 'Fecha', 'i_ingr_fecha', '100'); ?>
-							<?php echo entrada('input', 'Orden de compra', 'i_orco_id', '100'); ?>
+							<?php echo entrada('input', 'Factura', 'i_orco_id', '100'); ?>
 							<?php echo catalogo('proyectos', 'Proyecto', 'proy_nombre', 'i_proy_id', 'proy_id', 'proy_nombre', 0, 0, 150); ?>
 						</tr>
 					</table>
@@ -331,6 +334,12 @@ include_once('funciones_ui.php');
 							<?php echo entrada('input', 'Detalle', 'r_detalle') ?>
 							<?php echo entrada('input', 'Cantidad', 'i_cantidad', '50', '', '', ' onchange="verificar_cantidad()"') ?>
 							<?php echo entrada('input', 'Precio', 'i_precio', '80') ?>
+							<?php echo entrada('input', 'ITBMS', 'i_itbms', '80') ?>
+							<script>
+								$("#i_precio").on("change", function(){
+									$("#i_itbms").val(($(this).val() * 0.07).toFixed(2))
+								})
+							</script>
 							<td>
 								<div id=dvd_mensaje></div>
 							</td>
@@ -370,15 +379,12 @@ include_once('funciones_ui.php');
 				<td><input type='text' id=m_inde_cantidad size=40 class='entradas' onchange="verificar_cantidad_m()"></td>
 			</tr>
 			<tr>
-				<td class='etiquetas'>Disponible:</td>
-				<td><input type='text' id=m_disponible size=40 class='entradas' readonly></td>
-			</tr>
-			<tr>
 				<td class='etiquetas'>precio:</td>
 				<td><input type='text' id=m_ingr_precio size=40 class='entradas'></td>
 			</tr>
 			<tr>
-				<?php echo catalogo('sino', 'Con Itbms', 'sino_nombre', 'm_orcd_con_itbms', 'sino_id', 'sino_nombre', 0, 0, 150) ?>
+			<td class='etiquetas'>Itbms:</td>
+			<td><input type='text' id=m_itbms size=40 class='entradas'></td>
 			</tr>
 			<tr>
 				<td colspan=2><a href='javascript:modificar_item()' class='botones'>Modificar</a></td>

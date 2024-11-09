@@ -7,6 +7,7 @@ $ingr_id=$_POST['ingr_id'];
 $r_detalle=$_POST['r_detalle'];
 $i_ingr_precio=$_POST['i_precio'];
 $i_inde_temp_code=$_POST['h_codigo'];
+$i_itbms = $_POST["i_itbms"];
 //borro si ya existe
 $qsql = "delete from cons_notas_credito_detalle where orcd_temp_code='$i_inde_temp_code' and prod_id='$i_prod_id'";
 mysql_query($qsql);
@@ -18,7 +19,9 @@ mysql_query($qsql);
    nocr_precio,
    nocr_id,
    nocr_detalle,
-   nocr_temp_code
+   nocr_temp_code,
+	nocr_itbms,
+	orco_id
 	) 
 	values (
 	'$i_prod_id', 
@@ -26,6 +29,8 @@ mysql_query($qsql);
 	'$i_ingr_precio', 
 	'$ingr_id',
 	'$r_detalle',
-	'$i_inde_temp_code')";
+	'$i_inde_temp_code',
+	'$i_itbms'
+	)";
 	mysql_query($qsql);
 ?>

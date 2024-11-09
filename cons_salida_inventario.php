@@ -24,7 +24,7 @@ function agregar_solicitud()
 			'secuencia':  $('#h_secuencia').val(),
 			'proy_id':  $('#i_proy_id').val(),
 			'nive_id':  $('#h_nive_id').val(),
-			'responsable':  $('#i_usua_id').val()
+			'responsable':  $('#i_cosa_responsable').val()
 			
 		}
 		,
@@ -108,7 +108,8 @@ function verificar_cantidad()
 					</div>
 					<div class="form-row">
 					<label>
-						<?php echo catalogo('usuarios', 'Responsable','usua_nombre','i_usua_id','usua_id','usua_nombre',0,0,450,'','','','','','','','2')?>
+						<!-- <?php echo catalogo('cons_solicitudes_responsables', 'Responsable','csre_nombre','csre_id','csre_id','csre_nombre',0,0,450,'','','','','','','','2')?> -->
+						<?php echo entrada('input', 'Responsable', 'i_cosa_responsable', '150') ?>
 					</label>
 					</div>
 					<div class="form-row">

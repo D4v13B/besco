@@ -11,4 +11,5 @@ echo mysql_result($rs,$i,'orco_fecha') . '||';
 echo mysql_result($rs,$i,'orco_numero') . '||';
 echo mysql_result($rs,$i,'copr_nombre') . '||';
 echo mysql_result($rs,$i,'proy_id') . '||';
+echo mysql_result($rs,$i,'orco_comentario') . '||';
 ?>

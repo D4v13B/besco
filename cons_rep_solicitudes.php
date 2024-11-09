@@ -153,13 +153,13 @@
 <div id='modal'>
 	<div id='content'>
 		<input type=hidden id=h_id>
-		<div style="overflow:auto;height:300px;width:500px;display:flex;padding:5px; flex-direction: column;justify-content: center;">
+		<div style="overflow:auto;width:500px;display:flex;padding:5px; flex-direction: column;justify-content: center;">
 			<div style="margin: 10px;"><?php echo catalogo('cons_proveedores', 'Proveedor', 'copr_nombre', 'i_copr_id', 'copr_id', 'copr_nombre', 0, 2, 200, '', ' onselect="asignar_proveedor()"', '', '', '', '', '', '2') ?></div>
 			<div style="margin: 10px;"><?php echo catalogo('sino', 'Adjuntar a Pendiente', 'sino_nombre', 'i_adjuntar', 'sino_id', 'sino_nombre', 0, 0, 50, '', '', '', '', '', '', '', '2') ?></div>
 			<div style="margin: 10px;" id=datos></div>
 		</div>
 		<div id=dv_aprobar_orden>
-			<?php if ($rol == 1 || $rol == 2) { ?><a href="javascript:aprobar_orden()" class=botones>Aprobar</a><?php } ?>
+			<?php if ($rol == 1 || $rol == 2 || $rol == 9) { ?><a href="javascript:aprobar_orden()" class=botones>Aprobar</a><?php } ?>
 		</div>
 		<div id=dv_crear_orden>
 			<a href="javascript:crear_orden()" class=botones>Crear Orden de Compra</a>
@@ -177,7 +177,7 @@
 				?>
 			</tr>
 			<tr>
-				<?php echo entrada('fecha', 'Fecha', 'i_fecha', 200) ?>
+				<?php echo entrada('fecha', 'Fecha', 'i_fecha', 200, "", "", "", "", "", "now") ?>
 			</tr>
 			<tr>
 				<td><a href="javascript:crear_orden_proceso()" class=botones>Convertir</a></td>

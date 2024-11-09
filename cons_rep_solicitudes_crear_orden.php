@@ -42,10 +42,12 @@ if ($user_check != '') {
 			 * 
 			 * A su vez retorna el id de la orden_compra que esta pendiente y el count que dice que hay mas de 0
 			 */
-			$orco_id = obtener_valor("SELECT COALESCE(orco_id,0) orco, COUNT(*) FROM cons_orden_compra where crpr_id='$prov_id' and ores_id=1 order by orco_id desc limit 1", "orco");
+			$orco_id = obtener_valor("SELECT COALESCE(orco_id,0) orco
+						FROM cons_orden_compra 
+						WHERE crpr_id='$prov_id' 
+						AND ores_id=1 ORDER BY orco_id DESC LIMIT 1", "orco");
 
 			if ($orco_id != 0) {
-				array_push($prov_procesados, $prov_id);
 				/**
 				 * Aqui vamos a tomar las lineas del solicitud_detalle y se la vamos a actualizar al orco_id que tenemos en $orco_id["orco"]
 				 */
@@ -54,10 +56,15 @@ if ($user_check != '') {
 				/**
 				 * Vamos a seleccionar todos los productos del detalle de la solicitud que tengan al proveedor $prov_id
 				 */
-				$qsql = "SELECT * FROM cons_solicitudes_detalles a 
-                     JOIN construccion_rubros b ON a.coru_id = b.coru_id 
-                     JOIN construccion_presupuesto c ON a.coru_id = c.coru_id 
-                     WHERE a.copr_id = '$prov_id' AND a.coso_numero = '$coso_numero'";
+				// $qsql = "SELECT * FROM cons_solicitudes_detalles a 
+            //          JOIN construccion_rubros b ON a.coru_id = b.coru_id 
+            //          JOIN construccion_presupuesto c ON a.coru_id = c.coru_id 
+            //          WHERE a.copr_id = '$prov_id' AND a.coso_numero = '$coso_numero'";
+
+				$qsql = "SELECT * FROM cons_solicitudes_detalles a, construccion_rubros b, construccion_presupuesto c 
+				WHERE a.coru_id = b.coru_id 
+				AND b.coru_id = c.coru_id
+				AND a.copr_id = '$prov_id' AND a.coso_numero = '$coso_numero'";
 
 				$solicitud_detalle = mysql_query($qsql);
 
@@ -71,17 +78,22 @@ if ($user_check != '') {
 					 * Aqui hacemos una insercion de los rubros que estan siendo procesados dentro de la orden de compra con el proveedor que estamos procesando
 					 */
 
-					$qsql = "INSERT INTO cons_orden_compra_detalles(
-					orco_id, 
-					prod_id, 
-					orcd_cantidad, 
-					orcd_detalle, 
-					orcd_precio) VALUES (
-					'$compra_id', 
-					'$prod_id', 
-					'$cosd_cantidad', 
-					'$orcd_detalle', 
-					'$precio')";
+					$qsql = "INSERT INTO cons_orden_compra_detalles
+					(
+						orco_id, 
+						prod_id, 
+						orcd_cantidad, 
+						orcd_detalle, 
+						orcd_precio
+					) 
+					VALUES 
+					(
+						'$compra_id', 
+						'$prod_id', 
+						'$cosd_cantidad', 
+						'$orcd_detalle', 
+						'$precio'
+					)";
 
 					mysql_query($qsql);
 				}
@@ -98,24 +110,48 @@ if ($user_check != '') {
 				mysql_query("update codigos_temporales_orden_compra set cote_id=cote_id+1");
 				//INSERTO LA CABECERA DE LA ORDEN DE COMPRA
 				$qsql = "INSERT INTO cons_orden_compra 
-					(coso_id, crpr_id, orco_fecha, orco_fecha_creacion, orco_numero, proy_id, usua_id)
+					(
+						coso_id, 
+						crpr_id, 
+						orco_fecha, 
+						orco_fecha_creacion, 
+						orco_numero, 
+						proy_id, 
+						usua_id,
+						orco_temp_code
+					)
 					VALUES 
 					(
-					'$id',
-					'$prov_id',
-					'$fecha',
-					NOW(),
-					'$secuencia',
-					'$proy_id',
-					'$user_check'
+						'$id',
+						'$prov_id',
+						'$fecha',
+						NOW(),
+						'$secuencia',
+						'$proy_id',
+						'$user_check',
+						'$codigo'
 					)";
 
 				mysql_query($qsql);
 
 				$orco_id = mysql_insert_id();
 
-				$qsql = "INSERT INTO cons_orden_compra_detalles (orco_id, prod_id, orcd_cantidad, orcd_detalle, orcd_temp_code, orcd_precio)
-				(SELECT '$orco_id', a.coru_id, cosd_cantidad, coru_nombre, '$codigo', copr_monto
+				$qsql = "INSERT INTO cons_orden_compra_detalles 
+				(
+					orco_id, 
+					prod_id, 
+					orcd_cantidad, 
+					orcd_detalle, 
+					orcd_temp_code,
+					orcd_precio
+				)
+				(SELECT 
+					'$orco_id', 
+					a.coru_id, 
+					cosd_cantidad, 
+					coru_nombre, 
+					'$codigo', 
+					copr_monto
 				FROM cons_solicitudes_detalles a, construccion_rubros b, construccion_presupuesto c
 				WHERE coso_numero ='$coso_numero' 
 				AND a.copr_id='$prov_id'
@@ -128,42 +164,57 @@ if ($user_check != '') {
 		} else { //Si no queremos adjuntar, enviamos todo por cada proveedor
 
 			$qsql = "select cote_id from codigos_temporales_orden_compra";
-			$codigo = obtener_valor($qsql, 'cote_id');
+			$codigo = obtener_valor($qsql, 'cote_id'); //Codigo temporal
 			$secuencia = obtener_valor("select max(orco_numero)+ 1 factura from cons_orden_compra", "factura");
 			mysql_query("update codigos_temporales_orden_compra set cote_id=cote_id+1");
 			//CREAMOS LA CABECERA DE LA ORDEN DE COMPRA
 			$qsql = "INSERT INTO cons_orden_compra 
-					(coso_id, 
-					crpr_id, 
-					orco_fecha, 
-					orco_fecha_creacion, 
-					orco_numero, 
-					proy_id, 
-					usua_id)
+					(
+						coso_id, 
+						crpr_id, 
+						orco_fecha, 
+						orco_fecha_creacion, 
+						orco_numero,
+						proy_id, 
+						usua_id
+					)
 					VALUES 
 					(
-					'$id',
-					'$prov_id',
-					'$fecha',
-					NOW(),
-					'$secuencia',
-					'$proy_id',
-					'$user_check'
+						'$id',
+						'$prov_id',
+						'$fecha',
+						NOW(),
+						'$secuencia',
+						'$proy_id',
+						'$user_check'
 					)";
 
 			mysql_query($qsql);
 
 			$orco_id = mysql_insert_id();
 
-			$qsql = "INSERT INTO cons_orden_compra_detalles (orco_id, prod_id, orcd_cantidad, orcd_detalle, orcd_temp_code, orcd_precio)
-				(SELECT '$orco_id', a.coru_id, cosd_cantidad, coru_nombre, '$codigo', copr_monto
-				FROM cons_solicitudes_detalles a, construccion_rubros b, construccion_presupuesto c
-				WHERE coso_numero ='$coso_numero' 
-				AND a.copr_id='$prov_id'
-				AND a.coru_id = b.coru_id
-				AND a.coru_id = c.coru_id 
-				AND copr_pendientes >= cosd_cantidad 
-				AND c.proy_id='$proy_id')";
+			$qsql = "INSERT INTO cons_orden_compra_detalles 
+			(
+				orco_id, 
+				prod_id, 
+				orcd_cantidad, 
+				orcd_detalle, 
+				orcd_precio
+			)
+
+			(SELECT 
+				'$orco_id', 
+				a.coru_id, 
+				cosd_cantidad, 
+				b.coru_nombre,
+				copr_monto
+			FROM cons_solicitudes_detalles a, construccion_rubros b, construccion_presupuesto c
+			WHERE coso_numero ='$coso_numero' 
+			AND a.copr_id='$prov_id'
+			AND a.coru_id = b.coru_id
+			AND a.coru_id = c.coru_id 
+			AND copr_pendientes >= cosd_cantidad 
+			AND c.proy_id='$proy_id')";
 			mysql_query($qsql);
 		}
 		$i++;
@@ -184,11 +235,7 @@ if ($user_check != '') {
 
 	//INSERTO EL DETALLE
 
-
-
-
-
 	//debo actualizar la solicitud
-	$qsql = "UPDATE cons_solicitudes SET cose_id=2 WHERE coso_id='$id'";
+	$qsql = "UPDATE cons_solicitudes SET cose_id=3 WHERE coso_id='$id'";
 	mysql_query($qsql);
 }

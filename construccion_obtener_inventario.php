@@ -5,11 +5,11 @@ include('conexion.php');
 
 $inventario = $_REQUEST["inventario"];
 
-$qsql="SELECT coru_id, concat(coca_nombre, '-', cosu_nombre, '-', coru_nombre) rubro 
-FROM construccion_rubros a, construccion_subcategorias b, construccion_categorias c 
-WHERE a.cosu_id=b.cosu_id 
-AND b.coca_id=c.coca_id
-AND coru_nombre like '%$inventario%' order by coru_nombre";
+$qsql="SELECT coru_id, concat(c.coca_nombre, '-', b.cosu_nombre, '-', a.coru_nombre) rubro
+FROM construccion_rubros a, construccion_subcategorias b, construccion_categorias c
+WHERE a.cosu_id=b.cosu_id
+  AND b.coca_id=c.coca_id
+  AND coru_nombre like '%$inventario%' order by coru_nombre";
 $rs = mysql_query($qsql);
 $json=array();
  

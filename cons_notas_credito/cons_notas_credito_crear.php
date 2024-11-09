@@ -11,6 +11,10 @@ $i_ingr_fecha=$_POST['i_ingr_fecha'];
 $orco_id=$_POST["i_orco_id"];
 $user_id = $_SESSION["login_user"];
 
+$qsql = "";
+
+$monto = obtener_valor("SELECT SUM(nocr_precio) monto_total FROM cons_notas_credito_detalle WHERE nocr_temp_code = '$h_codigo'", "monto_total");
+
 $qsql = "INSERT INTO cons_notas_credito 
 (
    crpr_id,
@@ -18,15 +22,22 @@ $qsql = "INSERT INTO cons_notas_credito
    usua_id,
    proy_id,
    nocr_fecha,
-   nocr_fecha_registro
+   nocr_fecha_registro,
+   nocr_saldo,
+   nocr_monto,
+   nocr_temp_code
 )
-VALUES (
+VALUES 
+(
    '$copr_id', 
    '$orco_id',
    '$user_id',
    '$proy_id',
    '$i_ingr_fecha',
-   NOW()
+   NOW(),
+   '$monto',
+   '$monto',
+   '$h_codigo'
 )";
 mysql_query($qsql);
 //despues que la creo debo ponerle el código final a todos los detalles

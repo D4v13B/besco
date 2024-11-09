@@ -45,16 +45,41 @@
 	}
 
 	function instalar(id) {
-		$('#modal3').show();
-		$('#overla3').show();
-		$('#modal3').center();
+		// $('#modal3').show();
+		// $('#overla3').show();
+		// $('#modal3').center();
 		$('#h3_id').val(id);
-		// $('#result').load('cons_salida_inventario_instalar.php?id=' + id,
+		$('#result').load('cons_salida_inventario_instalar.php?id=' + id,
+			function() {
+				alert('Salida Instalada');
+				mostrar();
+			}
+		);
+		// $('#content_3').load('cons_salida_inventario_datos.php?id=' + id,
 		// 	function() {
-		// 		alert('Salida Instalada');
-		// 		mostrar();
+				
 		// 	}
 		// );
+	}
+
+	function editarInstalacion(id){
+		$('#h3_id').val(id);
+		$('#modal3').show();
+		$('#overlay3').show();
+		$('#modal3').center();
+		$('#content_3').load('cons_salida_inventario_datos.php?id=' + id + 
+		"&nochk=jjjlae222",
+			function() {
+				
+			}
+		);
+	}
+
+	function crearInstalacion(){
+
+		$.ajax({
+			method: "POST"
+		})
 	}
 
 	function retornar(id) {
@@ -96,7 +121,7 @@
 <div id='overlay2'></div>
 <div id='modal2'>
 	<div id='content'>
-		<TABLE>
+		<table>
 			<tr>
 				<?php echo catalogo('cons_proveedores', 'Proveedor', 'copr_nombre', 'i_copr_id', 'copr_id', 'copr_nombre', 0, 2, 200) ?>
 			</tr>
@@ -106,7 +131,8 @@
 			<tr>
 				<td><a href="javascript:crear_orden_proceso()" class=botones>Convertir</a></td>
 			</tr>
-		</TABLE>
+		</table>
+		<div id="result"></div>
 	</div>
 	<a href='javascript:void(0)' id='close2'>close</a>
 </div>
@@ -114,10 +140,15 @@
 <div id='overlay3'></div>
 <div id='modal3'>
 	<div id='content'>
-	<input type=hidden id=h3_id>
-		<h1>Hola</h1>
+		<input type=hidden id=h3_id>
+		<input type=hidden id=cantidad_total>
+		<div id="content_3"></div>
 	</div>
 	<a href='javascript:void(0)' id='close3'>close</a>
 </div>
 
 <div id=result></div>
+
+<script>
+	$("#i_retorno").attr("readonly", "readonly")
+</script>

@@ -33,7 +33,7 @@ $machote = str_replace('[PROMOTOR]',$cliente, $machote);
 $machote = str_replace('[MES]',$mes, $machote);
 
 $adjunto = '../orden_compra/orden_compra_' . $id . '.pdf';
-enviar_email('', 'PROMOTORA ORION', 'ORDEN DE COMPRA', $machote, $clie_mail, $adjunto);  
+enviar_email('', 'PROMOTORA ORION', 'ORDEN DE COMPRA', $machote, $clie_mail, $adjunto);
 
 //echo $adjunto;
 //mysql_query("UPDATE ingresos SET ingr_notificada=1 WHERE ingr_id='$id'");

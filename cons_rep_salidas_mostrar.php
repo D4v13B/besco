@@ -21,7 +21,6 @@
 <th class=tabla_datos_titulo_iconos style="width:20px"></th>
 <th class=tabla_datos_titulo_iconos style="width:20px"></th>
 <th class=tabla_datos_titulo_iconos style="width:20px"></th>
-<th class=tabla_datos_titulo_iconos style="width:20px"></th>
 </tr>
 </thead>
 <tbody>
@@ -32,8 +31,8 @@ $where='';
 if($f_cose_id!='' && $f_cose_id!='null') $where .="AND a.cose_id IN ($f_cose_id)";
 if($f_coso_numero!='' && $f_coso_numero!='null') $where .="AND a.coso_numero LIKE '%$f_coso_numero%'";
 
-$qsql ="SELECT cosa_id, cose_nombre, cosa_numero, cosa_fecha, proy_nombre, a.cose_id, cosa_fecha_entrega, cosa_fecha_instalado, cosa_fecha_retorno,
-(SELECT usua_nombre FROM usuarios WHERE usua_id=a.usua_id) usuario 
+$qsql ="SELECT cosa_id, cose_nombre, cosa_numero, cosa_fecha, proy_nombre, a.cose_id, cosa_fecha_entrega, cosa_fecha_instalado, cosa_fecha_retorno, cosa_responsable,
+(SELECT csre_nombre FROM cons_rep_responsables WHERE csre_id=a.csre_id) usuario 
 FROM cons_salidas a, cons_salidas_estados b, proyectos c
 WHERE a.proy_id=c.proy_id
 AND a.cose_id=b.cose_id
@@ -55,7 +54,7 @@ while ($i<$num)
 <td class=tabla_datos><?php echo mysql_result($rs, $i, 'cosa_fecha_entrega'); ?></td>
 <td class=tabla_datos><?php echo mysql_result($rs, $i, 'cosa_fecha_instalado'); ?></td>
 <td class=tabla_datos><?php echo mysql_result($rs, $i, 'cosa_fecha_retorno'); ?></td>
-<td class=tabla_datos><?php echo mysql_result($rs, $i, 'usuario'); ?></td>
+<td class=tabla_datos><?php echo mysql_result($rs, $i, 'cosa_responsable'); ?></td>
 
             <td class=tabla_datos_iconos>
 			
@@ -85,20 +84,9 @@ while ($i<$num)
 			//solo se instala si esta en cose_id 2
 			if($cose_id==2) {?>
 				<div>
-					<a Class='btn' title="Instalar" href='javascript:instalar(<?php echo mysql_result($rs, $i, 'cosa_id'); ?>)' ;>
+					<a Class='btn' title="Instalar" href='javascript:editarInstalacion(<?php echo mysql_result($rs, $i, 'cosa_numero'); ?>)' ;>
 					<svg style = 'width: 22px;' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M413.1 222.5l22.2 22.2c9.4 9.4 9.4 24.6 0 33.9L241 473c-9.4 9.4-24.6 9.4-33.9 0L12.7 278.6c-9.4-9.4-9.4-24.6 0-33.9l22.2-22.2c9.5-9.5 25-9.3 34.3 .4L184 343.4V56c0-13.3 10.7-24 24-24h32c13.3 0 24 10.7 24 24v287.4l114.8-120.5c9.3-9.8 24.8-10 34.3-.4z"/></svg>
 					</a>
-				</div>
-			<?php }?>
-			</td>
-			
-			<td>
-			<?php 
-			//solo se instala si esta en cose_id 2
-			if($cose_id==2) {?>
-				<div>
-					<a Class='btn' title="Retornar" href='javascript:retornar(<?php echo mysql_result($rs, $i, 'cosa_id'); ?>)' ;>
-					<svg style = 'width: 22px;' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M212.3 224.3H12c-6.6 0-12-5.4-12-12V12C0 5.4 5.4 0 12 0h48c6.6 0 12 5.4 12 12v78.1C117.8 39.3 184.3 7.5 258.2 8c136.9 1 246.4 111.6 246.2 248.5C504 393.3 393.1 504 256.3 504c-64.1 0-122.5-24.3-166.5-64.2-5.1-4.6-5.3-12.6-.5-17.4l34-34c4.5-4.5 11.7-4.7 16.4-.5C170.8 415.3 211.6 432 256.3 432c97.3 0 176-78.7 176-176 0-97.3-78.7-176-176-176-58.5 0-110.3 28.5-142.3 72.3h98.3c6.6 0 12 5.4 12 12v48c0 6.6-5.4 12-12 12z"/></svg>
 				</div>
 			<?php }?>
 			</td>

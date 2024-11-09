@@ -1128,7 +1128,7 @@ function catalogo($tabla, $etiqueta, $order, $id, $tid, $tnombre,$todo,$multiple
 
 
 
-function entrada($tipo, $etiqueta, $id, $tamano='', $valor='', $readonly='', $onchange='', $no_etiqueta='', $stilo='')
+function entrada($tipo, $etiqueta, $id, $tamano='', $valor='', $readonly='', $onchange='', $no_etiqueta='', $stilo='', $minDate= '')
 
 {
 
@@ -1158,7 +1158,16 @@ function entrada($tipo, $etiqueta, $id, $tamano='', $valor='', $readonly='', $on
 
 		autocomplete='off' $onchange value='$valor' $readonly></td>	";
 
-	$resultado .= "<script>$('#$id').datepicker({ dateFormat: 'yymmdd' });</script>";
+		if($minDate == "now"){
+			$resultado .= "<script>$('#$id').datepicker({ 
+			dateFormat: 'yymmdd',
+			minDate: new Date() 
+			});</script>";
+		}else{
+
+			$resultado .= "<script>$('#$id').datepicker({ dateFormat: 'yymmdd' });</script>";
+		}
+
 
 	}
 
@@ -1294,12 +1303,17 @@ if (!function_exists('str_contains')) {
 
 
 
-function enviar_email($from, $from_name, $subject, $mensaje, $email, $adjunto='')
+function enviar_email($from, $from_name, $subject, $mensaje, $email, $adjunto='', $mail = "")
 
 {
 
-$mail = new PHPMailer;
+	
 
+	// use PHPMailer\PHPMailer\PHPMailer;
+	// use PHPMailer\PHPMailer\Exception;
+	if($mail == ""){
+		$mail = new PHPMailer();
+	} 
 
 
 $mail_usuario = obtener_valor("SELECT para_valor FROM parametros WHERE para_nombre='mail_usuario'","para_valor");

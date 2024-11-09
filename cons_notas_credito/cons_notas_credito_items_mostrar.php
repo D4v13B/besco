@@ -14,7 +14,7 @@ $id=$_GET['id'];
 <td class=tabla_datos_titulo_icono></td>
 </tr>
 <?php
-$qsql ="SELECT nocr_id, coru_nombre, nocr_detalle, nocr_cantidad, nocr_precio
+$qsql ="SELECT nocr_id, coru_nombre, nocr_detalle, nocr_cantidad, nocr_precio, nocr_itbms, nocd_id
 FROM cons_notas_credito_detalle a, construccion_rubros b
 WHERE a.prod_id=b.coru_id
   AND nocr_temp_code='$id'
@@ -36,9 +36,9 @@ while ($i<$num)
 <td class=tabla_datos style="text-align:center"><?php echo mysql_result($rs, $i, 'nocr_cantidad'); ?></td>
 <td class=tabla_datos style="text-align:right"><?php echo number_format(mysql_result($rs, $i, 'nocr_precio'),4); ?></td>
 <td class=tabla_datos style="text-align:right"><?php echo number_format(mysql_result($rs, $i, 'nocr_precio')*mysql_result($rs, $i, 'nocr_cantidad'),2); ?></td>
-<td class=tabla_datos_iconos style="text-align:center"><?php echo mysql_result($rs, $i, 'con_itbms'); ?></td>
-<td class=tabla_datos_iconos><a href='javascript:editar_item(<?php echo mysql_result($rs, $i, 'nocr_id'); ?>)';><img src='imagenes/modificar.png' border=0></a></td>
-<td class=tabla_datos_iconos><a href='javascript:borrar_item(<?php echo mysql_result($rs, $i, 'nocr_id'); ?>)';><img src='imagenes/trash.png' border=0></a></td>
+<td class=tabla_datos_iconos style="text-align:center"><?php echo mysql_result($rs, $i, 'nocr_itbms'); ?></td>
+<td class=tabla_datos_iconos><a href='javascript:editar_item(<?php echo mysql_result($rs, $i, 'nocd_id'); ?>)';><img src='imagenes/modificar.png' border=0></a></td>
+<td class=tabla_datos_iconos><a href='javascript:borrar_item(<?php echo mysql_result($rs, $i, 'nocd_id'); ?>)';><img src='imagenes/trash.png' border=0></a></td>
 </tr>
 <?php
 $ctotal += mysql_result($rs, $i, 'nocr_cantidad');

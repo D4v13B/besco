@@ -34,8 +34,8 @@ $rol = obtener_rol($user_check);
 	// if($copr_id!='' && $copr_id!='null') $where .= " AND b.copr_id in ($copr_id)";
 
 	$qsql = "select nocr_id, copr_nombre, a.nocr_fecha,
-       (select sum(nocr_precio*nocr_cantidad) from cons_notas_credito_detalle where nocr_id=a.nocr_id) monto,
-       (select sum(nocr_precio*nocr_cantidad)*0.07 from cons_notas_credito_detalle where nocr_id=a.nocr_id and nocr_con_itbms=1) itbms
+       (select sum(nocr_precio*nocr_cantidad) from cons_notas_credito_detalle where nocr_id=a.nocr_id) monto, nocr_temp_code,
+       (select sum(nocr_itbms) from cons_notas_credito_detalle where nocr_id=a.nocr_id) itbms
 from cons_notas_credito a, cons_proveedores b
 where a.crpr_id=b.copr_id
 $where
@@ -57,9 +57,9 @@ order by nocr_id desc
 			<td class=tabla_datos><?php echo mysql_result($rs, $i, 'monto'); ?></td>
 			<td class=tabla_datos><?php echo mysql_result($rs, $i, 'itbms'); ?></td>
 			<td class=tabla_datos><?php echo (mysql_result($rs, $i, 'itbms') + mysql_result($rs, $i, 'monto')); ?></td>
-			<td class=tabla_datos_iconos><a href='javascript:editar(<?php echo mysql_result($rs, $i, 'nocr_id'); ?>)' ;><img src='imagenes/modificar.png' border=0 style="width:25px;height:25px" alt="Editar" title="Editar"></a></td>
+			<td class=tabla_datos_iconos><a href='javascript:editar(<?php echo mysql_result($rs, $i, 'nocr_temp_code'); ?>)' ;><img src='imagenes/modificar.png' border=0 style="width:25px;height:25px" alt="Editar" title="Editar"></a></td>
 			<td class=tabla_datos_iconos><a href='javascript:imprimir_factura(<?php echo mysql_result($rs, $i, 'nocr_id'); ?>)' ;><img src='imagenes/invoice.png' style="width:25px;height:25px" border=0 title="Imprimir Factura" alt="Imprimir Factura"></a></td>
-			<td class=tabla_datos_iconos><?php if ($rol == 1) { ?><a href='javascript:aprobar(<?php echo mysql_result($rs, $i, 'nocr_id'); ?>)' ;><img src='imagenes/ok.png' border=0 style="width:25px;height:25px" alt="Editar" title="Editar"></a><?php } ?></td>
+			<td class=tabla_datos_iconos></td>
 			<td class=tabla_datos_iconos><?php if ($aprobada == 'SI') { ?><a href='index.php?p=cons_recibir/cons_recibir_orden&id=<?php echo mysql_result($rs, $i, 'nocr_id'); ?>&responsive=1' ;><img src='imagenes/recibir.png' border=0 style="width:25px;height:25px" title="Recibir" alt="Recibir"></a><?php } ?></td>
 			<td class=tabla_datos_iconos><?php if ($aprobada == 'SI') { ?><a href='javascript:enviar_oc(<?php echo mysql_result($rs, $i, 'nocr_id'); ?>)' ;><img src='imagenes/enviar_email.png' border=0 style="width:25px;height:25px" title="Enviar OC" alt="Enviar OC"></a><?php } ?></td>
 			<td class=tabla_datos_iconos><a href='javascript:borrar(<?php echo mysql_result($rs, $i, 'nocr_id'); ?>)' ;><img src='imagenes/trash.png' border=0 style="width:25px;height:25px" title="Eliminar" alt="Eliminar"></a>
