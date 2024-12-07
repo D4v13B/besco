@@ -7,7 +7,7 @@ $notas_credito_pago = json_decode($_POST["notas_credito"], true);
 $copr_id = $_POST["copr_id"];
 $usua_id = $_SESSION["login_user"];
 $fopa_id = $_POST["fopa_id"];
-$fecha = !empty($_POST["i_fecha"]) ? $_POST["i_fecha"] : date("d-m-Y");
+$fecha = $_POST["i_fecha"];
 $pago_agrupado = count($notas_credito_pago) > 1 ? 1 : 0;
 
 foreach ($notas_credito_pago as $ncp) {
@@ -35,17 +35,12 @@ foreach ($notas_credito_pago as $ncp) {
       '$nocr_id'
    )";
 
-   $res = mysql_query($qsql);
+   mysql_query($qsql);
 
-   $res = mysql_affected_row($res);
+   echo $qsql;
 
-   if($res > 0){
-      $qsql = "UPDATE cons_notas_credito SET nocr_saldo = nocr_saldo - $monto WHERE nocr_id = $nocr_id";
-      mysql_query($qsql);
-   }else{
-      http_response_code(400);
-      die();
-   }
+   $qsql = "UPDATE cons_notas_credito SET nocr_saldo = nocr_saldo - $monto WHERE nocr_id = $nocr_id";
+   mysql_query($qsql);
 }
 
 // INSERT INTO cons_facturas_pagos ( 

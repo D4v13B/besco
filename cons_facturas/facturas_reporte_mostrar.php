@@ -72,7 +72,7 @@ $(function() {
 
 <th class=tabla_datos_titulo>Total</th>
 
-<th class=tabla_datos_titulo>Saldo</th>
+<th class=tabla_datos_titulo>Debe</th>
 
 <th class=tabla_datos_titulo></th>
 
@@ -200,11 +200,15 @@ $i++;
 
 <td class=tabla_datos_titulo></td>
 
+<td class=tabla_datos_titulo></td>
+
 <td class=tabla_datos_titulo>Total</td>
 
 <td class="tabla_datos_titulo e-int_derecha"><?php echo number_format($total,2)?></td>
 
 <td class="tabla_datos_titulo e-int_derecha"><?php echo number_format($tsaldo,2)?></td>
+
+<td></td>
 
 <td></td>
 

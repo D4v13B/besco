@@ -31,11 +31,10 @@ $where='';
 if($f_cose_id!='' && $f_cose_id!='null') $where .="AND a.cose_id IN ($f_cose_id)";
 if($f_coso_numero!='' && $f_coso_numero!='null') $where .="AND a.coso_numero LIKE '%$f_coso_numero%'";
 
-$qsql ="SELECT cosa_id, cose_nombre, cosa_numero, cosa_fecha, proy_nombre, a.cose_id, cosa_fecha_entrega, cosa_fecha_instalado, cosa_fecha_retorno, cosa_responsable,
-(SELECT csre_nombre FROM cons_rep_responsables WHERE csre_id=a.csre_id) usuario 
+$qsql ="SELECT cosa_id, cose_nombre, cosa_numero, cosa_fecha, proy_nombre, a.cose_id, cosa_fecha_entrega, cosa_fecha_instalado, cosa_fecha_retorno, cosa_responsable
 FROM cons_salidas a, cons_salidas_estados b, proyectos c
 WHERE a.proy_id=c.proy_id
-AND a.cose_id=b.cose_id
+  AND a.cose_id=b.cose_id
 $where
 ";
 
@@ -70,10 +69,10 @@ while ($i<$num)
 			<td>
 			<?php 
 			//solo se procesa si está pendiente 
-			if($cose_id==1) {?>
+			if($cose_id==1 or $cose_id == 2) {?>
 				<div>
 					<a Class='btn' title="Procesar" href='javascript:procesar(<?php echo mysql_result($rs, $i, 'cosa_id'); ?>)' ;>
-					<svg style = 'width: 22px;' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M400 480H48c-26.5 0-48-21.5-48-48V80c0-26.5 21.5-48 48-48h352c26.5 0 48 21.5 48 48v352c0 26.5-21.5 48-48 48zm-204.7-98.1l184-184c6.2-6.2 6.2-16.4 0-22.6l-22.6-22.6c-6.2-6.2-16.4-6.2-22.6 0L184 302.7l-70.1-70.1c-6.2-6.2-16.4-6.2-22.6 0l-22.6 22.6c-6.2 6.2-6.2 16.4 0 22.6l104 104c6.2 6.3 16.4 6.3 22.6 0z"/></svg>
+					<svg style = 'width: 22px;' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M400 480H48c-26.5 0-48-21.5-48-48V80c0-26.5 21.5-48 48-48h352c26.5 0 48 21.5 48 48v352c0 26.5-21.5 48-48 48zm-204.7-98.1l184-184c6.2-6.2 6.2-16.4 0-22.6l-22.6-22.6c-6.2-6.2-16.4-6.2-22.6 0L184 302.7l-70.1-70.1c-6.2-6.2-16.4-6.2-22.6 0l-22.6 22.6c-6.2 6.2-6.2 16.4 0 22.6l104 104c6.2 6.3 16.4 6.3 22.6 0z"/></svg>
 					</a>
 				</div>
 			<?php }?>
@@ -85,7 +84,7 @@ while ($i<$num)
 			if($cose_id==2) {?>
 				<div>
 					<a Class='btn' title="Instalar" href='javascript:editarInstalacion(<?php echo mysql_result($rs, $i, 'cosa_numero'); ?>)' ;>
-					<svg style = 'width: 22px;' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M413.1 222.5l22.2 22.2c9.4 9.4 9.4 24.6 0 33.9L241 473c-9.4 9.4-24.6 9.4-33.9 0L12.7 278.6c-9.4-9.4-9.4-24.6 0-33.9l22.2-22.2c9.5-9.5 25-9.3 34.3 .4L184 343.4V56c0-13.3 10.7-24 24-24h32c13.3 0 24 10.7 24 24v287.4l114.8-120.5c9.3-9.8 24.8-10 34.3-.4z"/></svg>
+					<svg style = 'width: 22px;' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M413.1 222.5l22.2 22.2c9.4 9.4 9.4 24.6 0 33.9L241 473c-9.4 9.4-24.6 9.4-33.9 0L12.7 278.6c-9.4-9.4-9.4-24.6 0-33.9l22.2-22.2c9.5-9.5 25-9.3 34.3 .4L184 343.4V56c0-13.3 10.7-24 24-24h32c13.3 0 24 10.7 24 24v287.4l114.8-120.5c9.3-9.8 24.8-10 34.3-.4z"/></svg>
 					</a>
 				</div>
 			<?php }?>

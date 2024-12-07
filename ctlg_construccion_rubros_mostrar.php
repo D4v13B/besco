@@ -23,6 +23,11 @@
 $nombre=$_GET['nombre'];
 
 
+$f_coru_herramienta = $_GET["f_coru_herramienta"];
+
+$where  = "";
+$where .= (isset($_GET["f_coru_herramienta"])) ? " AND coru_herramienta = $f_coru_herramienta " : "";
+
 
 $qsql ="SELECT c.coca_nombre, b.cosu_nombre, a.coru_id, a.coru_nombre,
 
@@ -33,6 +38,8 @@ FROM construccion_rubros a, construccion_subcategorias b, construccion_categoria
 WHERE a.cosu_id=b.cosu_id
 
 AND b.coca_id=c.coca_id
+
+$where
 
 ORDER BY coca_nombre, cosu_nombre, coru_nombre";
 

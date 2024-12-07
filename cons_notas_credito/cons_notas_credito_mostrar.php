@@ -9,6 +9,8 @@ $rol = obtener_rol($user_check);
 	<tr>
 		<td class=tabla_datos_titulo>No. N/C</td>
 		<td class=tabla_datos_titulo>Proveedor</td>
+		<td class=tabla_datos_titulo>Referencia</td>
+		<td class=tabla_datos_titulo>Factura</td>
 		<td class=tabla_datos_titulo>Fecha</td>
 		<td class=tabla_datos_titulo>Monto</td>
 		<td class=tabla_datos_titulo>ITBMS</td>
@@ -33,7 +35,7 @@ $rol = obtener_rol($user_check);
 	// if($hasta!='') $where .= " AND date_format(orco_fecha, '%Y%m%d')<=$hasta";
 	// if($copr_id!='' && $copr_id!='null') $where .= " AND b.copr_id in ($copr_id)";
 
-	$qsql = "select nocr_id, copr_nombre, a.nocr_fecha,
+	$qsql = "select nocr_id, copr_nombre, a.nocr_fecha, nocr_referencia, orco_id,
        (select sum(nocr_precio*nocr_cantidad) from cons_notas_credito_detalle where nocr_id=a.nocr_id) monto, nocr_temp_code,
        (select sum(nocr_itbms) from cons_notas_credito_detalle where nocr_id=a.nocr_id) itbms
 from cons_notas_credito a, cons_proveedores b
@@ -53,6 +55,8 @@ order by nocr_id desc
 		<tr class='tabla_datos_tr'>
 			<td class=tabla_datos><?php echo mysql_result($rs, $i, 'nocr_id'); ?></td>
 			<td class=tabla_datos><?php echo mysql_result($rs, $i, 'copr_nombre'); ?></td>
+			<td class=tabla_datos><?php echo mysql_result($rs, $i, 'nocr_referencia'); ?></td>
+			<td class=tabla_datos><?php echo mysql_result($rs, $i, 'orco_id'); ?></td>
 			<td class=tabla_datos><?php echo mysql_result($rs, $i, 'nocr_fecha'); ?></td>
 			<td class=tabla_datos><?php echo mysql_result($rs, $i, 'monto'); ?></td>
 			<td class=tabla_datos><?php echo mysql_result($rs, $i, 'itbms'); ?></td>
@@ -78,8 +82,10 @@ order by nocr_id desc
 		<td></td>
 		<td></td>
 		<td></td>
-		<td style="text-align:right !important"><?php echo number_format($tmonto, 2) ?></td>
 		<td></td>
+		<td></td>
+		<td></td>
+		<td style	="text-align:right !important"><?php echo number_format($tmonto, 2) ?></td>
 		<td></td>
 		<td></td>
 		<td></td>

@@ -37,7 +37,7 @@
 					function() {
 						//abro el documento
 						window.open('documentos_temporales/documento_entrega.pdf');
-						alert('Salida procesada');
+						// alert('Salida procesada');
 						mostrar();
 					});
 			}

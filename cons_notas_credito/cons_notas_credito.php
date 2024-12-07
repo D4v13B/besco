@@ -23,7 +23,8 @@ include_once('funciones_ui.php');
 				'i_ingr_fecha': $('#i_ingr_fecha').val(),
 				'i_numero_factura': $('#i_numero_factura').val(),
 				'proy_id': $('#i_proy_id').val(),
-				'i_orco_id': $("#i_orco_id").val()
+				'i_orco_id': $("#i_orco_id").val(),
+				'i_nocr_referencia': $("#i_nocr_referencia").val()
 			},
 			function() {
 				$('#modal').hide('slow');
@@ -52,7 +53,7 @@ include_once('funciones_ui.php');
 	function borrar(id) {
 		var agree = confirm('¿Está seguro?');
 		if (agree) {
-			$('#result').load('cotizaciones_borrar.php?id=' + id,
+			$('#result').load('cons_notas_credito/cons_notas_credito_borrar.php?id=' + id,
 				function() {
 					mostrar();
 				}
@@ -79,6 +80,7 @@ include_once('funciones_ui.php');
 					$('#proveedor').val(r_array[4]);
 					$('#i_proy_id').val(r_array[5]);
 					$('#i_orco_id').val(r_array[6]);
+					$('#i_nocr_referencia').val(r_array[7])
 
 					$('#modal').show();
 					$('#overlay').show();
@@ -94,7 +96,8 @@ include_once('funciones_ui.php');
 			"&factura=" + $('#f_factura').val() +
 			"&desde=" + $('#f_desde').val() +
 			"&hasta=" + $('#f_hasta').val() +
-			"&copr_id=" + $('#f_proveedor').val()
+			"&copr_id=" + $('#f_proveedor').val() +
+			"&referencia=" + $("#f_nocr_referencia").val() 
 		);
 	}
 
@@ -291,6 +294,7 @@ include_once('funciones_ui.php');
 	<table class=filtros>
 		<tr>
 			<?php echo entrada('input', 'Cotización', 'f_factura') ?>
+			<?php echo entrada('input', 'Referencia', 'f_nocr_referencia') ?>
 			<?php echo entrada('input', 'Desde', 'f_desde') ?>
 			<?php echo entrada('input', 'Hasta', 'f_hasta') ?>
 		</tr>
@@ -319,6 +323,7 @@ include_once('funciones_ui.php');
 					<table class=filtros style="width:1000px">
 						<tr>
 							<?php echo entrada('input', 'Proveedor', 'proveedor', '200'); ?>
+							<?php echo entrada('input', 'Referencia', 'i_nocr_referencia') ?>
 							<?php echo entrada('fecha', 'Fecha', 'i_ingr_fecha', '100'); ?>
 							<?php echo entrada('input', 'Factura', 'i_orco_id', '100'); ?>
 							<?php echo catalogo('proyectos', 'Proyecto', 'proy_nombre', 'i_proy_id', 'proy_id', 'proy_nombre', 0, 0, 150); ?>

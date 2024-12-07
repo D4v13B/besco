@@ -324,7 +324,8 @@ if ($num > 0) {
 	$qsql = "SELECT * FROM cons_notas_credito WHERE crpr_id = $prov_id AND nocr_saldo > 0";
 	$res = mysql_query($qsql);
 
-	while ($fila = mysql_fetch_assoc($res)) { ?>
+	while ($fila = mysql_fetch_assoc($res)) { 
+		?>
 		<tr>
 			<td>NC- <?php echo $fila["nocr_id"] ?></td>
 			<td><?php echo $fila["nocr_monto"] ?></td>

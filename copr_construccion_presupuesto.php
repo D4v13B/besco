@@ -17,7 +17,7 @@
 
         'i_cosu_id': $('#i_cosu_id').val(),
 
-        'i_coru_id': $('#h_coru_id').val(),
+        'i_coru_id': $('#i_coru_id').val(),
 
         'i_copr_cantidad': $('#i_copr_cantidad').val(),
 
@@ -281,7 +281,9 @@
 
       <tr>
 
-        <?php echo entrada('input', 'Producto Inventario', 'inventario', '350'); ?>
+        <!-- <?php echo entrada('input', 'Producto Inventario', 'inventario', '350'); ?> -->
+
+        <?php echo catalogo('construccion_rubros', 'Rubro', 'coru_nombre', 'i_coru_id', 'coru_id', 'coru_nombre', '0', '0', '150'); ?>
 
       </tr>
 

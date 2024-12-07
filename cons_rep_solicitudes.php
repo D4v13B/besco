@@ -10,6 +10,17 @@
 
 	}
 
+	function eliminar(id) {
+		if (confirm("¿Seguro que deseas eliminar?")) {
+			$.get('cons_rep_solicitudes_rechazar.php?id=' + id, 
+				function(data){
+					alert("Eliminado correctamente")
+					mostrar()
+				}
+			)
+		}
+	}
+
 	function validar_estado(id) {
 		$.get('cons_rep_solicitudes_estado.php?id=' + id,
 			function(data) {
@@ -117,7 +128,7 @@
 				'm_cosd_cantidad': $('#m_cosd_cantidad').val(),
 				'm_copr_id': $('#m_copr_id').val()
 			},
-		function() {
+			function() {
 				$('#modal3').hide('slow');
 				$('#overlay3').hide();
 				cargar_datos($('#h_id').val());

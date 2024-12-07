@@ -105,13 +105,13 @@ order by orco_id desc
 			<td class=tabla_datos_iconos><a href='javascript:imprimir_factura(<?php echo mysql_result($rs, $i, 'orco_id'); ?>)' ;><img src='imagenes/invoice.png' style="width:25px;height:25px" border=0 title="Imprimir Factura" alt="Imprimir Factura"></a></td>
 
 			<td class=tabla_datos_iconos><?php if ($rol == 1) { ?><a href='javascript:aprobar(<?php echo mysql_result($rs, $i, 'orco_id'); ?>)' ;><img src='imagenes/ok.png' border=0 style="width:25px;height:25px" alt="Editar" title="Editar"></a><?php } ?></td>
-			<td class=tabla_datos_iconos><?php if ($aprobada == 'SI') { ?><a href='index.php?p=cons_recibir/cons_recibir_orden&id=<?php echo mysql_result($rs, $i, 'orco_id'); ?>&responsive=1' ; target="_blank"><img src='imagenes/recibir.png' border=0 style="width:25px;height:25px" title="Recibir" alt="Recibir"></a><?php } ?></td>
+			<td class=tabla_datos_iconos><?php if ($aprobada == 'SI' or 1 == 1) { ?><a href='index.php?p=cons_recibir/cons_recibir_orden&id=<?php echo mysql_result($rs, $i, 'orco_id'); ?>&responsive=1' ; target="_blank"><img src='imagenes/recibir.png' border=0 style="width:25px;height:25px" title="Recibir" alt="Recibir"></a><?php } ?></td>
 			<!-- Ingeniero -->
-			<td class=tabla_datos_iconos><?php if ($aprobada == 'SI') { ?><a href='javascript:enviar_oc(<?php echo mysql_result($rs, $i, 'orco_id'); ?>, "ingeniero")' ;><img src='imagenes/enviar_email.png' border=0 style="width:25px;height:25px" title="Enviar OC" alt="Enviar OC"></a><?php } ?></td>
+			<td class=tabla_datos_iconos><?php if ($aprobada == 'SI' or 1 == 1) { ?><a href='javascript:enviar_oc(<?php echo mysql_result($rs, $i, 'orco_id'); ?>, "ingeniero")' ;><img src='imagenes/enviar_email.png' border=0 style="width:25px;height:25px" title="Enviar OC" alt="Enviar OC"></a><?php } ?></td>
 			<!-- Ricardo -->
-			<td class=tabla_datos_iconos><?php if ($aprobada == 'SI') { ?><a href='javascript:enviar_oc(<?php echo mysql_result($rs, $i, 'orco_id'); ?>, "ricardo")' ;><img src='imagenes/enviar_email.png' border=0 style="width:25px;height:25px" title="Enviar OC" alt="Enviar OC"></a><?php } ?></td>
+			<td class=tabla_datos_iconos><?php if ($aprobada == 'SI' or 1 == 1) { ?><a href='javascript:enviar_oc(<?php echo mysql_result($rs, $i, 'orco_id'); ?>, "ricardo")' ;><img src='imagenes/enviar_email.png' border=0 style="width:25px;height:25px" title="Enviar OC" alt="Enviar OC"></a><?php } ?></td>
 			<!-- Proveedor -->
-			<td class=tabla_datos_iconos><?php if ($aprobada == 'SI') { ?><a href='javascript:enviarCorreoProv(<?php echo mysql_result($rs, $i, 'orco_id'); ?>, "proveedor")' ;><img src='imagenes/enviar_email.png' border=0 style="width:25px;height:25px" title="Enviar OC" alt="Enviar OC"></a><?php } ?></td>
+			<td class=tabla_datos_iconos><?php if ($aprobada == 'SI' or 1 == 1) { ?><a href='javascript:enviarCorreoProv(<?php echo mysql_result($rs, $i, 'orco_id'); ?>, "proveedor")' ;><img src='imagenes/enviar_email.png' border=0 style="width:25px;height:25px" title="Enviar OC" alt="Enviar OC"></a><?php } ?></td>
 			<td class=tabla_datos_iconos><a href='javascript:borrar(<?php echo mysql_result($rs, $i, 'orco_id'); ?>)' ;><img src='imagenes/trash.png' border=0 style="width:25px;height:25px" title="Eliminar" alt="Eliminar"></a></td>
 		</tr>
 	<?php

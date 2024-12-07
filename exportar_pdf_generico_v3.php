@@ -17,6 +17,7 @@ $output0 = ob_get_clean();
 
 ob_start();
 
+// include($contenido);
 ?>
 
 
@@ -127,7 +128,7 @@ echo "</style>";
 
 ?>
 
-<?php echo $output0 ?>
+<?php include($_POST["contenido"]) ?>
 
 </page>
 
@@ -137,15 +138,13 @@ $content = ob_get_clean();
 
 include("mpdf/mpdf.php");
 
-
-
 $mpdf=new mPDF('', 'Letter'); 
 
 $mpdf->WriteHTML($content);
 
 $mpdf->Output("documentos_temporales/$archivo.pdf",'F');
 
-//$mpdf->Output();
+$mpdf->Output();
 
 exit;
 

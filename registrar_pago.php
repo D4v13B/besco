@@ -27,60 +27,6 @@
 		$('#i_monto').val(parseFloat(monto).toFixed(2));
 	}
 
-	// function emitir()
-	// {
-	// 	//debo validar que este todo para emitir
-	// 	if(
-	// 	$('#i_copr_id').val()!='' && 
-	// 	$('#i_fopa_id').val()!='' && 
-	// 	$('#i_fecha').val()!='')
-	// 	{
-	// 		//paso por todos los valores y armo una cadena
-	// 		arr_montos="";
-	// 		arr_fact_id="";
-	// 		$('input.chk_fact_id:checkbox:checked').each(function () 
-	// 		{
-	// 			//debo armar dos cadenas con los montos y el id de la factura 
-	// 			var id_temp = this.id;
-	// 			temp_monto = $('#m_' + id_temp).val()*1;
-
-	// 			arr_montos = arr_montos + '' + temp_monto + '|';
-	// 			arr_fact_id = arr_fact_id + '' + id_temp + '|';
-
-	// 		});
-	// 		//si no esta vacio el arreglo envio el pago
-	// 		if(arr_montos!='' && arr_fact_id!='')
-	// 		{
-	// 			$('#result').load('registrar_pago_emitir.php'
-	// 			,
-	// 			{
-	// 				'clie_id':  $('#i_copr_id').val(),
-	// 				'fecha':  $('#i_fecha').val(),
-	// 				'fopa_id':  $('#i_fopa_id').val(),
-	// 				'arr_montos':  arr_montos,
-	// 				'arr_fact_id':  arr_fact_id
-	// 			}
-	// 			,
-	// 			function(datos)
-	// 			{
-	// 				alert('Pago Registrado!');
-
-	// 				console.log(datos);
-	// 				// imprimir_recibo(datos);
-	// 				//limpio la pantalla
-	// 				$('#frm_registro').trigger("reset");
-	// 				$('#facturas_pendientes').html('');
-
-	// 			}
-	// 			);
-	// 		}
-	// 	}
-	// 	else
-	// 	{
-	// 		alert('Debe ingresar todos los datos!');
-	// 	}
-	// }
-
 	function imprimir_recibo(id) {
 		$("#result").load("exportar_pdf_recibo_agrupado.php?id=" + id,
 				function(data) {
@@ -104,6 +50,8 @@
 				<input type='hidden' id="i_copr_id">
 			</label>
 		</div>
+
+		<div id="result_2"></div>
 
 		<div class="form-row">
 			<label>
@@ -162,6 +110,8 @@
 
 			}
 		);
+
+		$("#result_2").load("registrar_pago_abono_pendiente.php?prov_id="+$("#i_copr_id").val())
 	}
 </script>
 

@@ -64,12 +64,13 @@ include('funciones_ui.php');
 		$('#div_crear').hide();
 		$('#div_modificar').show();
 		$("#h_codigo").val(id)
+		$("#tipo").val("orco_id")
 		$.get('cons_orden_compra/codigo_temporal_orden_compra_modificar.php?id=' + id,
 			function(data) {
 				// $('#h_codigo').val(data);
 				//ahora muestro los items para esa factura
 				mostrar_items();
-				$.get('cons_orden_compra/cons_orden_compra_datos.php?id=' + id, function(data) {
+				$.get('cons_orden_compra/cons_orden_compra_datos.php?id=' + id + "&tipo=" + $("#tipo").val(), function(data) {
 					var resp = data;
 					r_array = resp.split('||');
 					//alert(r_array[0]);
@@ -128,6 +129,7 @@ include('funciones_ui.php');
 				var resp = data;
 				r_array = resp.split('||');
 				$('#h_codigo').val(r_array[0]);
+				$("#tipo").val("orcd_temp_code")
 
 				$('#i_numero_factura').val(r_array[1]);
 				//ahora muestro los items para esa factura
@@ -140,7 +142,7 @@ include('funciones_ui.php');
 	}
 
 	function mostrar_items() {
-		$('#i_detalle').load('cons_orden_compra/cons_orden_compra_items_mostrar.php?id=' + $('#h_codigo').val());
+		$('#i_detalle').load('cons_orden_compra/cons_orden_compra_items_mostrar.php?id=' + $('#h_codigo').val() + "&tipo=" + $("#tipo").val());	
 	}
 
 	function agregar_item() {
@@ -321,6 +323,7 @@ include('funciones_ui.php');
 			</td>
 			<td><a href='javascript:nuevo()' class=botones>Nuevo</a>
 				<input type=hidden id=h_codigo>
+				<input type="hidden" id=tipo>
 			</td>
 		</tr>
 	</table>

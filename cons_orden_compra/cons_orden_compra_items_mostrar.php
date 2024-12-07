@@ -1,6 +1,8 @@
 <?php
 include('../conexion.php');
 $id = $_GET['id'];
+$parametroTipo = $_GET["tipo"];
+
 ?>
 <table class=nicetable>
    <tr>
@@ -24,7 +26,7 @@ $id = $_GET['id'];
 IF(orcd_con_itbms=1,'SI','NO') con_itbms
 FROM cons_orden_compra_detalles a, construccion_rubros b
 WHERE a.prod_id=b.coru_id
-AND orco_id='$id'";
+AND $parametroTipo='$id'";
 
    $rs = mysql_query($qsql);
    $num = mysql_num_rows($rs);

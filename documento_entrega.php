@@ -1,7 +1,7 @@
 <?php
 
-require "conexion.php";
-require "funciones.php";
+require_once "conexion.php";
+require_once "funciones.php";
 
 $id = $_GET['id'];
 
@@ -116,7 +116,6 @@ while ($j < $numc) {
 $conceptos .= "</table>";
 
 $conceptos .= "<hr />";
-
 
 
 echo $machote = str_replace("[DETALLE]", $conceptos, $machote);
