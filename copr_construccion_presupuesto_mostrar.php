@@ -82,7 +82,7 @@ if($f_copr_fecha!='' && $f_copr_fecha!='null') $where .="AND a.copr_fecha LIKE '
 
 if($f_cosu_id!='' && $f_cosu_id!='null') $where .="AND a.cosu_id IN ($f_cosu_id)";
 
-if($f_coru_id!='' && $f_coru_id!='null') $where .="AND a.coru_id IN ($f_coru_id)";
+if(isset($_GET["f_coru_id"]) && $_GET["f_coru_id"] != "undefined") $where .="AND a.coru_id IN ($f_coru_id)";
 
 if($f_copr_cantidad!='' && $f_copr_cantidad!='null') $where .="AND a.copr_cantidad LIKE '%$f_copr_cantidad%'";
 

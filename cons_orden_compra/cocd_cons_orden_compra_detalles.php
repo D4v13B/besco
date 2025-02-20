@@ -61,11 +61,12 @@
   }
 
   function mostrar() {
-    $('#datos_mostrar').load('cons_orden_compra/cocd_cons_orden_compra_detalles_mostrar.php?nochk=jjjlae222' +
+    $('#datos_mostrar').load('cons_orden_compra/cocd_cons_orden_compra_detalles_mostrar.php?a=1' +
       "&f_orco_id=" + $('#f_orco_id').val() +
       "&f_orcd_detalle=" + $('#f_orcd_detalle').val() +
       "&f_orcd_itbms=" + $('#f_orcd_itbms').val() +
-      "&f_orcd_recibido=" + $('#f_orcd_recibido').val()
+      "&f_orcd_recibido=" + $('#f_orcd_recibido').val() +
+      "&f_crpr_id=" + $('#f_copr_id').val()
     );
   }
 </script>
@@ -73,18 +74,25 @@
   <table width='' class=filtros>
     <tr>
     <tr>
+    <tr>
       <?php echo catalogo('cons_orden_compra', 'Compra #', 'orco_numero', 'f_orco_id', 'orco_id', 'orco_numero', '0', '1', '150'); ?>
       <?php echo catalogo('sino', 'Pendientes', 'sino_id', 'f_orcd_recibido', 'sino_id', 'sino_nombre', '0', '1', '150'); ?>
-      <!-- <?php echo entrada('input', 'Cantidad', 'f_orcd_cantidad', '150') ?> -->
-      <!-- <?php echo entrada('input', 'Precio', 'f_orcd_precio', '150') ?></tr> -->
+    </tr>
     <tr>
       <?php echo entrada('input', 'Descripción/Rubro', 'f_orcd_detalle', '150') ?>
       <?php echo entrada('input', 'ITBMS', 'f_orcd_itbms', '150') ?>
+    </tr>
+    <tr>
+      <?php echo catalogo('cons_proveedores', 'Proveedor', 'copr_nombre', 'f_copr_id', 'copr_id', 'copr_nombre', '0', '1', '150'); ?>
+    </tr>
+    </tr>
+    <tr>
       <td class='tabla_datos'>
         <div id='b_mostrar'><a href='javascript:mostrar()' class=botones>Mostrar</a></div>
       </td>
-      <!-- <td><div id='dmodal' style='text-align:right'><a href='#' class=botones>Nuevo</a></div></td> -->
     </tr>
+    </tr>
+    <!-- <td><div id='dmodal' style='text-align:right'><a href='#' class=botones>Nuevo</a></div></td> -->
   </table>
 </div>
 <div id='columna6'>
@@ -96,7 +104,7 @@
   <div id='content'>
     <table>
       <tr>
-        <?php echo catalogo('cons_orden_compra', 'Compra #', 'orco_numero', 'i_orco_id', 'orco_id', 'orco_numero', '0', '0', '150'); ?>
+        <?php echo catalogo('cons_orden_compra', 'Compra #', 'orco_numero', 'i_orco_id', 'orco_id', 'orco_numero', '0', '1', '150'); ?>
       </tr>
       <tr>
         <?php echo entrada('input', 'Cantidad', 'i_orcd_cantidad', '150'); ?>

@@ -120,13 +120,13 @@ while($j<$numc)
 
 	$conceptos .= "<tr>";
 
-	$conceptos .= "<td style='font-size: 8pt;'><b>" . mysql_result($rsc, $j, 'coru_nombre') . "</b><br>" . mysql_result($rsc, $j, 'orcd_detalle') ."</td>";
+	$conceptos .= "<td style='font-size: 8pt;'><b>" . mysql_result($rsc, $j, 'coru_nombre') . "</b><br>" . mysql_result($rsc, $j, 'orcd_detalle') ."</td>";-
 
 	$conceptos .= "<td style='text-align:center;font-size: 8pt;'>" . number_format(mysql_result($rsc, $j, 'orcd_cantidad'),0) . "</td>";
 
-	$conceptos .= "<td style='text-align:right;font-size: 8pt;'>$ " . number_format(mysql_result($rsc, $j, 'orcd_precio'),2) . "</td>";
+	$conceptos .= "<td style='text-align:right;font-size: 8pt;'>$ " . number_format(mysql_result($rsc, $j, 'orcd_precio'),4) . "</td>";
 
-	$conceptos .= "<td style='text-align:right;font-size: 8pt;'>$ " . number_format(mysql_result($rsc, $j, 'orcd_precio')*mysql_result($rsc, $j, 'orcd_cantidad'),2) . "</td>";
+	$conceptos .= "<td style='text-align:right;font-size: 8pt;'>$ " . number_format(mysql_result($rsc, $j, 'orcd_precio')*mysql_result($rsc, $j, 'orcd_cantidad'),4) . "</td>";
 
 	$conceptos .= "</tr>";
 

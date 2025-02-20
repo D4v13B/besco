@@ -95,8 +95,9 @@ include('funciones_ui.php');
 		$('#datos_mostrar').load('cons_orden_compra/cons_orden_compra_mostrar.php?id=1' +
 			"&factura=" + $('#f_factura').val() +
 			"&desde=" + $('#f_desde').val() +
-			"&hasta=" + $('#f_hasta').val() +
-			"&copr_id=" + $('#f_proveedor').val()
+			"&hasta=" + $('#f_hasta').val() + 
+			"&copr_id=" + $('#f_proveedor').val() +
+			"&f_orco_id=" + $('#f_orco_id').val()
 		);
 	}
 
@@ -310,12 +311,13 @@ include('funciones_ui.php');
 <div id='separador'>
 	<table class=filtros>
 		<tr>
+			<?php echo catalogo('cons_orden_compra', 'Compra #', 'orco_numero', 'f_orco_id', 'orco_id', 'orco_numero', '0', 1, '150'); ?>
 			<?php echo entrada('input', 'Cotización', 'f_factura') ?>
 			<?php echo entrada('input', 'Desde', 'f_desde') ?>
 			<?php echo entrada('input', 'Hasta', 'f_hasta') ?>
+			<?php echo catalogo('cons_proveedores', 'Proveedor', 'copr_nombre', 'f_proveedor', 'copr_id', 'copr_nombre', 0, 1, 150) ?>
 		</tr>
 		<tr>
-			<?php echo catalogo('cons_proveedores', 'Proveedor', 'copr_nombre', 'f_proveedor', 'copr_id', 'copr_nombre', 0, 1, 150) ?>
 			<td></td>
 			<td></td>
 			<td class='tabla_datos'>

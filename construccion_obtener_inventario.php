@@ -3,7 +3,14 @@ include('conexion.php');
 
 //$cliente = mysql_real_escape_string($_GET['cliente']);
 
+$where = "";
 $inventario = $_REQUEST["inventario"];
+
+if(!empty($_COOKIE['i_coca_id'])){
+  $coca_id = $_COOKIE["i_coca_id"];
+  $where .= "AND b.coca_id = $coca_id";
+}
+
 $proy_id = $_GET["proy_id"];
 
 $qsql="SELECT coru_id, concat(c.coca_nombre, '-', b.cosu_nombre, '-', a.coru_nombre, 'DISP:',
@@ -15,11 +22,12 @@ FROM construccion_rubros a, construccion_subcategorias b, construccion_categoria
 WHERE ((a.cosu_id=b.cosu_id
   AND b.coca_id=c.coca_id) 
   OR coru_herramienta = 1)
+  $where
   AND coru_nombre like '%$inventario%' order by coru_nombre";
 $rs = mysql_query($qsql);
 $json=array();
  
-while($row = mysql_fetch_array($rs)) 
+while($row = mysql_fetch_assoc($rs)) 
 {
 	$json[]=array(
 	'id'=> $row['coru_id'],

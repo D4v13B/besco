@@ -125,7 +125,7 @@ $.get('ctlg_construccion_rubros_datos.php?id=' + id, function(data){
 function mostrar() {
 
   $('#datos_mostrar').load('ctlg_construccion_rubros_mostrar.php?' +
-      "f_coru_herramienta=" + $("#f_coru_herramienta").val()
+      "f_coru_herramienta=" + $("#f_coru_herramienta").val() + "&f_coru_id=" + $("#f_coru_id").val()
   );
   
 }
@@ -141,6 +141,8 @@ function mostrar() {
 <td class='tabla_datos'><div id='b_mostrar'><a href='javascript:mostrar()' class=botones>Mostrar</a></div></td>
 
 <?php echo catalogo('sino', 'Herramienta', 'sino_nombre', 'f_coru_herramienta', 'sino_id', 'sino_nombre',0,0,150)?>
+
+<?php echo catalogo('construccion_rubros', 'Rubro', 'coru_nombre', 'f_coru_id', 'coru_id', 'coru_nombre',0,1,150)?>
 
 <td><div id='dmodal' style='text-align:right'><a href='#' class=botones>Nuevo</a></div></td>
 
@@ -168,6 +170,8 @@ function mostrar() {
 
 <?php echo catalogo('sino', 'Herramienta', 'sino_nombre', 'i_coru_herramienta', 'sino_id', 'sino_nombre',0,0,150)?>
 
+<?php echo catalogo('construccion_rubros', 'Rubro', 'coru_nombre', 'i_coru_herramienta', 'coru_id', 'coru_nombre',0,0,150)?>
+
 </tr>
 
 <tr>
@@ -180,7 +184,7 @@ function mostrar() {
 
 <td class='etiquetas'>Inventario:</td>
 
-<td><input type='text' id=i_coru_nombre size=40 class='entradas'></td>
+<td><input type='' id=i_coru_nombre size=40 class='entradas'></td>
 
 </tr>
 

@@ -214,7 +214,7 @@
 
     <tr>
 
-      <?php echo catalogo('construccion_rubros', 'Rubro', 'coru_nombre', 'f_coru_id', 'coru_id', 'coru_nombre', '0', '1', '150'); ?>
+      <!-- <?php echo catalogo('construccion_rubros', 'Rubro', 'coru_nombre', 'f_coru_id', 'coru_id', 'coru_nombre', '0', '1', '150'); ?> -->
 
       <?php echo entrada('input', 'Cantidad', 'f_copr_cantidad', '150') ?>
 
@@ -329,8 +329,6 @@
     <input type=hidden id=h2_id>
     <table>
 
-      <!--
-
 <tr>
 
 <?php echo catalogo('proyectos', 'Proyecto', 'proy_nombre', 'm_proy_id', 'proy_id', 'proy_nombre', '0', '0', '150'); ?>
@@ -366,8 +364,6 @@
 <?php echo entrada('input', 'Monto', 'm_copr_monto', '150'); ?>
 
 </tr>
-
--->
 
       <tr>
 

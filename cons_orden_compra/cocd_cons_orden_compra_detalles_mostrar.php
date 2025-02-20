@@ -11,6 +11,7 @@
 <table id='resultado' class="table nicetable">
    <tr>
       <th class=tabla_datos_titulo>Compra #</th>
+      <th class=tabla_datos_titulo>Proveedor</th>
       <th class=tabla_datos_titulo>Cantidad</th>
       <th class=tabla_datos_titulo>Pendientes</th>
       <th class=tabla_datos_titulo>Precio</th>
@@ -25,6 +26,7 @@
    $f_orcd_detalle = $_GET['f_orcd_detalle'];
    $f_orcd_itbms = $_GET['f_orcd_itbms'];
    $f_orcd_pendiente = $_GET["f_orcd_recibido"];
+   $f_crpr_id = $_GET["f_crpr_id"];
    $where = '';
    if ($f_orco_id != '' && $f_orco_id != 'null') $where .= "AND a.orco_id IN ($f_orco_id)";
    if ($f_orcd_cantidad != '' && $f_orcd_cantidad != 'null') $where .= "AND a.orcd_cantidad LIKE '%$f_orcd_cantidad%'";
@@ -32,10 +34,11 @@
    if ($f_orcd_detalle != '' && $f_orcd_detalle != 'null') $where .= "AND a.orcd_detalle LIKE '%$f_orcd_detalle%'";
    if ($f_orcd_itbms != '' && $f_orcd_itbms != 'null') $where .= "AND a.orcd_itbms LIKE '%$f_orcd_itbms%'";
    if($f_orcd_pendiente != '' && $f_orcd_pendiente != 'null' && $f_orcd_pendiente == 1) $where .= " AND orcd_recibido = 0"; //Esto es para extraer los pendientes 
+   if($f_crpr_id != '' && $f_crpr_id != 'null') $where .= " AND b.crpr_id = $f_crpr_id"; //Esto es para extraer los pendientes 
 
-   $qsql = "select *, (orcd_cantidad - orcd_recibido) pendientes from cons_orden_compra_detalles a,cons_orden_compra b
+   $qsql = "select *, (orcd_cantidad - orcd_recibido) pendientes, c.copr_nombre from cons_orden_compra_detalles a,cons_orden_compra b, cons_proveedores c
          WHERE 1=1
-      AND a.orco_id=b.orco_id
+      AND a.orco_id=b.orco_id AND b.crpr_id = c.copr_id
          $where
          ";
 
@@ -46,6 +49,7 @@
    ?>
       <tr class='tabla_datos_tr'>
          <td class=tabla_datos><?php echo mysql_result($rs, $i, 'orco_numero'); ?></td>
+         <td class=tabla_datos><?php echo mysql_result($rs, $i, 'copr_nombre'); ?></td>
          <td class=tabla_datos><?php echo mysql_result($rs, $i, 'orcd_cantidad'); ?></td>
          <td class=tabla_datos><?php echo mysql_result($rs, $i, 'pendientes'); ?></td>
          <td class=tabla_datos><?php echo mysql_result($rs, $i, 'orcd_precio'); ?></td>

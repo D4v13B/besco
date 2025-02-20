@@ -24,9 +24,12 @@ $nombre=$_GET['nombre'];
 
 
 $f_coru_herramienta = $_GET["f_coru_herramienta"];
+$f_coru_id = (isset($_GET["f_coru_id"]) and $_GET["f_coru_id"] != 'null') ? $_GET["f_coru_id"] : "";
+
 
 $where  = "";
-$where .= (isset($_GET["f_coru_herramienta"])) ? " AND coru_herramienta = $f_coru_herramienta " : "";
+$where .= ($f_coru_id != '') ? " AND coru_herramienta = $f_coru_herramienta " : "";
+$where .= ($f_coru_id != '') ? " AND coru_id IN ($f_coru_id) " : "";
 
 
 $qsql ="SELECT c.coca_nombre, b.cosu_nombre, a.coru_id, a.coru_nombre,

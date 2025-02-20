@@ -67,12 +67,14 @@ switch ($_SERVER["REQUEST_METHOD"]) {
 	$desde = $_GET['desde'];
 	$hasta = $_GET['hasta'];
 	$copr_id = $_GET['copr_id'];
+	$f_orco_id = $_GET['f_orco_id'];
 
 	$where = "";
 	if ($factura != '') $where .= " AND orco_numero=$factura";
 	if ($desde != '') $where .= " AND date_format(orco_fecha, '%Y%m%d')>=$desde";
 	if ($hasta != '') $where .= " AND date_format(orco_fecha, '%Y%m%d')<=$hasta";
 	if ($copr_id != '' && $copr_id != 'null') $where .= " AND b.copr_id in ($copr_id)";
+	if ($f_orco_id != '' && $f_orco_id != 'null') $where .= " AND a.orco_id IN ('$f_orco_id') ";
 
 	$qsql = "select orco_id, orco_numero, copr_nombre, orco_fecha,
 (select sum(orcd_precio*orcd_cantidad) from cons_orden_compra_detalles where orco_id=a.orco_id) monto,
@@ -101,11 +103,12 @@ order by orco_id desc
 			<td class=tabla_datos style="text-align:right !important"><?php echo number_format($monto, 2); ?></td>
 			<td class=tabla_datos style="text-align:right !important"><?php echo number_format($itbms, 2); ?></td>
 			<td class=tabla_datos style="text-align:right !important"><?php echo number_format($monto + $itbms, 2); ?></td>
+			
 			<td class=tabla_datos_iconos><a href='javascript:editar(<?php echo mysql_result($rs, $i, 'orco_id'); ?>)' ;><img src='imagenes/modificar.png' border=0 style="width:25px;height:25px" alt="Editar" title="Editar"></a></td>
 			<td class=tabla_datos_iconos><a href='javascript:imprimir_factura(<?php echo mysql_result($rs, $i, 'orco_id'); ?>)' ;><img src='imagenes/invoice.png' style="width:25px;height:25px" border=0 title="Imprimir Factura" alt="Imprimir Factura"></a></td>
 
 			<td class=tabla_datos_iconos><?php if ($rol == 1) { ?><a href='javascript:aprobar(<?php echo mysql_result($rs, $i, 'orco_id'); ?>)' ;><img src='imagenes/ok.png' border=0 style="width:25px;height:25px" alt="Editar" title="Editar"></a><?php } ?></td>
-			<td class=tabla_datos_iconos><?php if ($aprobada == 'SI' or 1 == 1) { ?><a href='index.php?p=cons_recibir/cons_recibir_orden&id=<?php echo mysql_result($rs, $i, 'orco_id'); ?>&responsive=1' ; target="_blank"><img src='imagenes/recibir.png' border=0 style="width:25px;height:25px" title="Recibir" alt="Recibir"></a><?php } ?></td>
+			<td class=tabla_datos_iconos><?php if ($aprobada == 'SI') { ?><a href='index.php?p=cons_recibir/cons_recibir_orden&id=<?php echo mysql_result($rs, $i, 'orco_id'); ?>&responsive=1' ; target="_blank"><img src='imagenes/recibir.png' border=0 style="width:25px;height:25px" title="Recibir" alt="Recibir"></a><?php } ?></td>
 			<!-- Ingeniero -->
 			<td class=tabla_datos_iconos><?php if ($aprobada == 'SI' or 1 == 1) { ?><a href='javascript:enviar_oc(<?php echo mysql_result($rs, $i, 'orco_id'); ?>, "ingeniero")' ;><img src='imagenes/enviar_email.png' border=0 style="width:25px;height:25px" title="Enviar OC" alt="Enviar OC"></a><?php } ?></td>
 			<!-- Ricardo -->
